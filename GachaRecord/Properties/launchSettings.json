@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "GachaRecord (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "GachaRecord (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

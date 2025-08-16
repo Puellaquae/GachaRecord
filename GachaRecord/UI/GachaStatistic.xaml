@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="GachaRecord.GachaStatistic"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GachaRecord"
+    xmlns:viewmodel="using:GachaRecord.ViewModel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance viewmodel:GachaWishShowData}"
+    mc:Ignorable="d">
+    
+    <Grid
+        BorderThickness="1"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        CornerRadius="{ThemeResource OverlayCornerRadius}"
+        Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+            <TextBlock
+                Padding="12, 16"
+                Style="{StaticResource SubtitleTextBlockStyle}" Text="{Binding WishName}"></TextBlock>
+        </Border>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Padding="12,0">
+            <TextBlock
+                Style="{StaticResource TitleLargeTextBlockStyle}"
+                FontSize="48"
+                Text="{Binding TotalGachaCount}" />
+            <TextBlock
+                Margin="4,0,0,8"
+                VerticalAlignment="Bottom"
+                Text="抽" />
+        </StackPanel>
+        <Grid Padding="0, 0, 0, 4" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <MenuFlyoutSeparator Grid.Column="0" Grid.Row="0" />
+            <TextBlock
+                Grid.Column="1"
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                Margin="8, -1.5, 8, 1.5"
+                Text="{Binding RecordRangeDisplay}" />
+            <MenuFlyoutSeparator Grid.Column="2" Grid.Row="0" />
+        </Grid>
+        <Grid Padding="12, 4"
+            ColumnSpacing="4"
+            RowSpacing="6"
+            Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="{ThemeResource ControlCornerRadius}"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                Grid.Column="0" Grid.Row="0">
+                <Viewbox StretchDirection="DownOnly">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0, 12">
+                            <TextBlock Width="54"
+                                Text="平均五星"
+                                Style="{StaticResource CaptionTextBlockStyle}" />
+                            <TextBlock Text="{Binding AverageRank5GachaCountDisplay}" />
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+            </Border>
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="{ThemeResource ControlCornerRadius}"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                Grid.Column="1" Grid.Row="0">
+                <Viewbox StretchDirection="DownOnly">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0, 12">
+                            <TextBlock Width="54"
+                                Text="五星已攒"
+                                Style="{StaticResource CaptionTextBlockStyle}" />
+                            <TextBlock Text="{Binding AfterLastRank5GachaCountDisplay}" />
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+            </Border>
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="{ThemeResource ControlCornerRadius}"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                Grid.Column="2" Grid.Row="0">
+                <Viewbox StretchDirection="DownOnly">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0, 12">
+                            <TextBlock Width="54"
+                                Text="最欧最非"
+                                Style="{StaticResource CaptionTextBlockStyle}" />
+                            <TextBlock Text="{Binding BestWorstRank5GachaDisplay}" />
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+            </Border>
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="{ThemeResource ControlCornerRadius}"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                ToolTipService.ToolTip="{Binding Rank5GachaCountPercentDisplay}"
+                Grid.Column="0" Grid.Row="1">
+                <Viewbox StretchDirection="DownOnly">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0, 12">
+                            <TextBlock Width="54"
+                                Text="五星累计"
+                                Style="{StaticResource CaptionTextBlockStyle}" />
+                            <TextBlock Text="{Binding Rank5GachaCountDisplay}" />
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+            </Border>
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="{ThemeResource ControlCornerRadius}"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                ToolTipService.ToolTip="{Binding Rank4GachaCountPercentDisplay}"
+                Grid.Column="1" Grid.Row="1">
+                <Viewbox StretchDirection="DownOnly">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0, 12">
+                            <TextBlock Width="54"
+                                Text="四星累计"
+                                Style="{StaticResource CaptionTextBlockStyle}" />
+                            <TextBlock Text="{Binding Rank4GachaCountDisplay}" />
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+            </Border>
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="{ThemeResource ControlCornerRadius}"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                ToolTipService.ToolTip="{Binding Rank3GachaCountPercentDisplay}"
+                Grid.Column="2" Grid.Row="1">
+                <Viewbox StretchDirection="DownOnly">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0, 12">
+                            <TextBlock Width="54"
+                                Text="三星累计"
+                                Style="{StaticResource CaptionTextBlockStyle}" />
+                            <TextBlock Text="{Binding Rank3GachaCountDisplay}" />
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+            </Border>
+        </Grid>
+        <MenuFlyoutSeparator Padding="0, 8" Grid.Row="4" />
+
+        <ListView ItemsSource="{Binding Rank5List}"
+            SelectionMode="None"
+            Grid.Row="5"
+            Padding="0,0,0,8">
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}"
+                    TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="12,2" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="{ThemeResource ControlCornerRadius}"
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        ToolTipService.ToolTip="{Binding Time}"
+                        Padding="8, 12">
+                        <TextBlock Text="{Binding Name}" Padding="8,0"/>
+                        <TextBlock HorizontalAlignment="Right" Text="{Binding GachaCount}" Padding="8,0" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>

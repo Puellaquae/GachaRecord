@@ -157,19 +157,7 @@ public partial class Hk4eGacha : GachaDataBase<Hk4eGacha, Hk4eGacha.MiGachaItem>
         DirectoryInfo webCacheFolder = new($@"{config.GamePath}\YuanShen_Data\webCaches");
         if (webCacheFolder.Exists)
         {
-            var cacheFolder = webCacheFolder.EnumerateDirectories()
-                .Where(dir => Utils.VersionRegex().IsMatch(dir.Name))
-                .MaxBy(dir => dir.LastWriteTime);
-            var cacheFile = Path.Combine(cacheFolder!.FullName, @"Cache\Cache_Data\data_2");
-            using FileStream reader = new(cacheFile, FileMode.Open);
-            using MemoryStream ms = new();
-            reader.CopyTo(ms);
-            ReadOnlySpan<byte> cache = ms.ToArray();
-            int idx = cache.LastIndexOf("public-operation-hk4e.mihoyo.com/gacha_info/api/getGachaLog"u8);
-            int end = cache[idx..].IndexOf("\0"u8);
-            var url = Encoding.UTF8.GetString(cache.Slice(idx, end));
-            Uri uri = new($"https://{url}");
-            var queries = HttpUtility.ParseQueryString(uri.Query);
+            var queries = Utils.GetQueryFromMihoyoWebCacheLog(webCacheFolder, "public-operation-hk4e.mihoyo.com/gacha_info/api/getGachaLog"u8);
             queries.Remove("page");
             queries.Remove("size");
             queries.Remove("gacha_type");

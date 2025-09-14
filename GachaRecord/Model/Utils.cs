@@ -1,9 +1,14 @@
 using System;
+using System.Collections.Specialized;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using Windows.Storage.Pickers;
 
 namespace GachaRecord.Model;
@@ -19,6 +24,25 @@ public partial class Utils
 
     [GeneratedRegex("^[1-9]+?\\.[0-9]+?\\.[0-9]+?\\.[0-9]+?$")]
     public static partial Regex VersionRegex();
+
+    public static NameValueCollection GetQueryFromMihoyoWebCacheLog(DirectoryInfo webCacheFolder, ReadOnlySpan<byte> urlPattern)
+    {
+        var cacheFolder = webCacheFolder.EnumerateDirectories()
+                .Where(dir => VersionRegex().IsMatch(dir.Name))
+                .MaxBy(dir => dir.LastWriteTime);
+        var cacheFile = Path.Combine(cacheFolder!.FullName, @"Cache\Cache_Data\data_2");
+        var tmpFile = Path.GetTempFileName();
+        File.Copy(cacheFile, tmpFile, true);
+        using FileStream reader = new(tmpFile, FileMode.Open, FileAccess.Read, FileShare.None, 4096, FileOptions.DeleteOnClose);
+        using MemoryStream ms = new();
+        reader.CopyTo(ms);
+        ReadOnlySpan<byte> cache = ms.ToArray();
+        int idx = cache.LastIndexOf(urlPattern);
+        int end = cache[idx..].IndexOf("\0"u8);
+        var url = Encoding.UTF8.GetString(cache.Slice(idx, end));
+        Uri uri = new($"https://{url}");
+        return HttpUtility.ParseQueryString(uri.Query);
+    }
 
     public static async Task<string> PickFile(params string[] fileTypes)
     {
@@ -44,7 +68,6 @@ public partial class Utils
         var file = await openPicker.PickSingleFileAsync();
         return file?.Path;
     }
-
 
     public static async Task<string> PickSaveFile(string suggestName)
     {

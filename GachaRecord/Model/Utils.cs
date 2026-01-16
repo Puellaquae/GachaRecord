@@ -37,10 +37,17 @@ public partial class Utils
         using MemoryStream ms = new();
         reader.CopyTo(ms);
         ReadOnlySpan<byte> cache = ms.ToArray();
-        int idx = cache.LastIndexOf(urlPattern);
-        int end = cache[idx..].IndexOf("\0"u8);
-        var url = Encoding.UTF8.GetString(cache.Slice(idx, end));
-        Uri uri = new($"https://{url}");
+        ReadOnlySpan<byte> protocol = "https://"u8;
+        int patternIdx = cache.LastIndexOf(urlPattern);
+        if (patternIdx == -1) throw new Exception("Not Found AuthKey in Cache");
+        int startIdx = cache[..patternIdx].LastIndexOf(protocol);
+        if (startIdx == -1) throw new Exception("Bad AuthKey in Cache");
+        int endOffset = cache[startIdx..].IndexOf("\0"u8);
+        var url = endOffset == -1
+            ? Encoding.UTF8.GetString(cache[startIdx..])
+            : Encoding.UTF8.GetString(cache.Slice(startIdx, endOffset));
+
+        Uri uri = new(url);
         return HttpUtility.ParseQueryString(uri.Query);
     }
 

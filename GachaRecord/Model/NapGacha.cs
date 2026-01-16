@@ -164,7 +164,7 @@ public partial class NapGacha : GachaDataBase<NapGacha, NapGacha.MiGachaItem>, I
         DirectoryInfo webCacheFolder = new($@"{config.GamePath}\ZenlessZoneZero_Data\webCaches");
         if (webCacheFolder.Exists)
         {
-            var queries = Utils.GetQueryFromMihoyoWebCacheLog(webCacheFolder, "public-operation-nap.mihoyo.com/common/gacha_record/api/getGachaLog"u8);
+            var queries = Utils.GetQueryFromMihoyoWebCacheLog(webCacheFolder, "gacha_record/api/getGachaLog"u8);
             queries.Remove("page");
             queries.Remove("size");
             queries.Remove("gacha_type");
